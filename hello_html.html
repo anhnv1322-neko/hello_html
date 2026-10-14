@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trang portfolio giới thiệu bản thân, kỹ năng, dự án và thông tin liên hệ.">
+    <title>Portfolio | Giới thiệu bản thân</title>
+    <style>
+        /* =========================
+           1. THIẾT LẬP CHUNG
+           ========================= */
+        :root {
+            --bg: #0b1020;
+            --bg-soft: #10182b;
+            --card: rgba(20, 30, 51, 0.84);
+            --card-hover: #17243c;
+            --text: #edf3ff;
+            --muted: #a3afc7;
+            --primary: #65d6ff;
+            --secondary: #9a8cff;
+            --border: rgba(164, 187, 226, 0.16);
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+            --radius: 22px;
+            --max-width: 1120px;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        body {
+            margin: 0;
+            color: var(--text);
+            background:
+                radial-gradient(ellipse at 12% 8%, rgba(56, 102, 187, 0.17), transparent 32%),
+                radial-gradient(ellipse at 88% 28%, rgba(111, 83, 190, 0.13), transparent 30%),
+                var(--bg);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+        }
+        a { color: inherit; text-decoration: none; }
+        .avatar-shape {
+            width: min(190px, 100%);
+            height: auto;
+            aspect-ratio: 1 / 1;
+            max-width: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+        }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        button { font: inherit; }
+        .container { width: min(var(--max-width), calc(100% - 40px)); margin: 0 auto; }
+        .section { padding: 100px 0; }
+        .section-heading { max-width: 690px; margin: 0 auto 48px; text-align: center; }
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 9px;
+            color: var(--primary); font-size: 0.82rem; font-weight: 800;
+            letter-spacing: 0.14em; text-transform: uppercase;
+        }
+        .eyebrow::before { content: ""; width: 24px; height: 2px; background: currentColor; border-radius: 10px; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 { margin-bottom: 18px; font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: -0.055em; }
+        h2 { margin: 14px 0 14px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; letter-spacing: -0.04em; }
+        h3 { line-height: 1.3; }
+        .gradient-text { color: var(--primary); background: linear-gradient(95deg, var(--primary), #b5a5ff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-description { max-width: 610px; margin: 0 auto; color: var(--muted); }
+        .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+        .button {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            min-height: 48px; padding: 12px 19px; border: 1px solid transparent;
+            border-radius: 13px; font-weight: 750; transition: transform .2s ease, background .2s ease, border-color .2s ease;
+        }
+        .button:hover { transform: translateY(-3px); }
+        .button-primary { color: #071321; background: linear-gradient(105deg, var(--primary), #a9caff); box-shadow: 0 10px 30px rgba(101, 214, 255, 0.14); }
+        .button-secondary { color: var(--text); border-color: var(--border); background: rgba(255,255,255,.025); }
+        .button-secondary:hover { border-color: rgba(101, 214, 255, .55); background: rgba(101, 214, 255, .06); }
+        .icon { width: 19px; height: 19px; flex: 0 0 auto; }
+
+        /* =========================
+           2. THANH ĐIỀU HƯỚNG
+           ========================= */
+        .site-header {
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 1px solid rgba(164, 187, 226, .1);
+            background: rgba(11, 16, 32, .84); backdrop-filter: blur(18px);
+        }
+        .navbar { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 1.06rem; font-weight: 850; letter-spacing: -.03em; white-space: nowrap; }
+        .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: #071321; background: linear-gradient(135deg, var(--primary), var(--secondary)); font-size: .9rem; font-weight: 950; }
+        .brand span:last-child { color: var(--primary); }
+        .nav-links { display: flex; align-items: center; gap: 8px; margin: 0; padding: 0; list-style: none; }
+        .nav-links a { display: inline-block; padding: 9px 12px; color: var(--muted); font-size: .92rem; font-weight: 650; border-radius: 10px; transition: color .2s, background .2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); background: rgba(255,255,255,.055); }
+        .nav-links .nav-contact { margin-left: 6px; padding: 10px 15px; color: var(--primary); border: 1px solid rgba(101, 214, 255, .28); }
+        .menu-toggle { display: none; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 12px; color: var(--text); background: var(--bg-soft); cursor: pointer; }
+
+        /* =========================
+           3. TRANG CHỦ / HERO
+           ========================= */
+        .hero { position: relative; overflow: hidden; padding: 82px 0 96px; }
+        .hero::before {
+            position: absolute; top: 80px; right: -110px; z-index: -1;
+            width: 390px; height: 390px; border: 1px solid rgba(101, 214, 255, .12);
+            border-radius: 50%; box-shadow: 0 0 0 48px rgba(101, 214, 255, .025), 0 0 0 96px rgba(101, 214, 255, .018);
+            content: "";
+        }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 66px; }
+        .availability { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 24px; padding: 7px 12px; border: 1px solid var(--border); border-radius: 99px; color: #c5d1e7; background: rgba(255,255,255,.025); font-size: .82rem; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7ad; box-shadow: 0 0 12px rgba(110,231,173,.55); }
+        .hero h1 .greeting { display: block; margin-bottom: 12px; color: var(--muted); font-size: .48em; font-weight: 600; letter-spacing: -.02em; }
+        .hero-role { margin: 0 0 18px; color: var(--primary); font-size: clamp(1.12rem, 2.5vw, 1.42rem); font-weight: 750; }
+        .hero-description { max-width: 570px; margin-bottom: 28px; color: var(--muted); font-size: 1.06rem; }
+        .hero-socials { display: flex; gap: 17px; margin-top: 28px; color: var(--muted); font-size: .9rem; }
+        .hero-socials a { transition: color .2s; }
+        .hero-socials a:hover { color: var(--primary); }
+        .hero-visual { position: relative; max-width: 450px; width: 100%; justify-self: end; }
+        .portrait-frame { position: relative; padding: 13px; border: 1px solid rgba(156, 174, 218, .24); border-radius: 30px; background: linear-gradient(145deg, rgba(101,214,255,.13), rgba(154,140,255,.07)); box-shadow: var(--shadow); transform: rotate(2deg); }
+        .portrait {
+            position: relative; overflow: hidden; display: grid; place-items: center; min-height: 420px;
+            border-radius: 21px; background:
+                radial-gradient(circle at 50% 26%, rgba(101,214,255,.24), transparent 28%),
+                linear-gradient(145deg, #1d3150, #11182c 72%);
+        }
+        .portrait::before, .portrait::after { position: absolute; content: ""; border: 1px solid rgba(101,214,255,.14); border-radius: 50%; }
+        .portrait::before { width: 300px; height: 300px; }
+        .portrait::after { width: 230px; height: 230px; }
+        .avatar-shape { position: relative; z-index: 1; display: grid; place-items: center; width: 190px; height: 190px; border: 1px solid rgba(255,255,255,.25); border-radius: 50%; color: #d9f6ff; background: linear-gradient(140deg, #3c83a7, #6658a8); font-size: 4rem; font-weight: 900; letter-spacing: -.08em; box-shadow: 0 15px 65px rgba(0,0,0,.28); }
+        .portrait-note { position: absolute; z-index: 2; right: 18px; bottom: 18px; left: 18px; display: flex; align-items: center; gap: 12px; padding: 15px 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 16px; background: rgba(8,14,28,.78); backdrop-filter: blur(12px); }
+        .note-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; color: var(--primary); background: rgba(101,214,255,.1); }
+        .portrait-note strong { display: block; font-size: .92rem; }
+        .portrait-note small { display: block; color: var(--muted); font-size: .78rem; }
+        .floating-chip { position: absolute; z-index: 3; display: flex; align-items: center; gap: 9px; padding: 11px 14px; border: 1px solid var(--border); border-radius: 14px; background: #121c30; box-shadow: var(--shadow); font-size: .84rem; font-weight: 750; }
+        .floating-chip.top { top: 34px; left: -28px; }
+        .floating-chip.bottom { right: -22px; bottom: 105px; }
+        .chip-symbol { color: var(--primary); font-size: 1.15rem; }
+
+        /* =========================
+           4. GIỚI THIỆU
+           ========================= */
+        .about-section { background: linear-gradient(180deg, transparent, rgba(17, 26, 45, .56), transparent); }
+        .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; align-items: start; gap: 54px; }
+        .about-summary { padding: 30px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); }
+        .about-symbol { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 22px; border-radius: 16px; color: var(--primary); background: rgba(101,214,255,.1); font-size: 1.5rem; }
+        .about-summary h3 { margin-bottom: 12px; font-size: 1.4rem; }
+        .about-summary p { margin-bottom: 0; color: var(--muted); }
+        .about-content p { color: var(--muted); }
+        .info-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-top: 28px; }
+        .info-item { padding: 16px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,.025); }
+        .info-label { display: block; margin-bottom: 5px; color: var(--muted); font-size: .78rem; }
+        .info-value { overflow-wrap: anywhere; font-size: .94rem; font-weight: 750; }
+
+        /* =========================
+           5. KỸ NĂNG
+           ========================= */
+        .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .skill-card { padding: 26px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); transition: transform .22s, border-color .22s, background .22s; }
+        .skill-card:hover { transform: translateY(-5px); border-color: rgba(101,214,255,.36); background: var(--card-hover); }
+        .skill-icon { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 18px; border-radius: 14px; color: var(--primary); background: rgba(101,214,255,.1); font-weight: 900; }
+        .skill-card h3 { margin-bottom: 8px; font-size: 1.1rem; }
+        .skill-card p { min-height: 52px; margin-bottom: 18px; color: var(--muted); font-size: .9rem; }
+        .skill-level { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; color: var(--muted); font-size: .78rem; }
+        .skill-track { height: 6px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.09); }
+        .skill-progress { width: var(--level, 50%); height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+
+        /* =========================
+           6. DỰ ÁN
+           ========================= */
+        .projects-section { background: linear-gradient(180deg, transparent, rgba(17, 26, 45, .56), transparent); }
+        .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .project-card { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); transition: transform .22s, border-color .22s; }
+        .project-card:hover { transform: translateY(-5px); border-color: rgba(154,140,255,.45); }
+        .project-cover { position: relative; display: grid; place-items: center; min-height: 174px; overflow: hidden; background: linear-gradient(135deg, #152a43, #28204c); }
+        .project-cover::before, .project-cover::after { position: absolute; content: ""; border: 1px solid rgba(255,255,255,.13); transform: rotate(-24deg); }
+        .project-cover::before { width: 210px; height: 115px; border-radius: 20px; }
+        .project-cover::after { width: 150px; height: 82px; border-radius: 15px; }
+        .project-cover span { position: relative; z-index: 1; color: var(--primary); font-size: 2.8rem; font-weight: 950; letter-spacing: -.08em; }
+        .project-body { padding: 23px; }
+        .project-body h3 { margin-bottom: 9px; font-size: 1.13rem; }
+        .project-body p { min-height: 72px; margin-bottom: 18px; color: var(--muted); font-size: .9rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 20px; }
+        .tag { padding: 5px 9px; border: 1px solid rgba(101,214,255,.17); border-radius: 8px; color: #b7e9fb; background: rgba(101,214,255,.06); font-size: .73rem; font-weight: 700; }
+        .project-link { display: inline-flex; align-items: center; gap: 7px; color: var(--primary); font-size: .88rem; font-weight: 750; }
+        .project-link:hover { text-decoration: underline; }
+
+        /* =========================
+           7. LIÊN HỆ
+           ========================= */
+        .contact-panel { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.1fr .9fr; gap: 34px; padding: 42px; border: 1px solid rgba(101,214,255,.2); border-radius: 28px; background: linear-gradient(130deg, rgba(23,44,68,.94), rgba(27,25,57,.94)); box-shadow: var(--shadow); }
+        .contact-panel::after { position: absolute; right: -60px; bottom: -120px; width: 300px; height: 300px; border: 1px solid rgba(154,140,255,.14); border-radius: 50%; content: ""; box-shadow: 0 0 0 35px rgba(154,140,255,.025), 0 0 0 70px rgba(154,140,255,.018); }
+        .contact-copy, .contact-methods { position: relative; z-index: 1; }
+        .contact-copy h2 { font-size: clamp(2rem, 4vw, 2.7rem); }
+        .contact-copy p { max-width: 470px; margin-bottom: 25px; color: var(--muted); }
+        .contact-methods { display: grid; align-content: center; gap: 12px; }
+        .contact-item { display: flex; align-items: center; gap: 14px; padding: 15px; border: 1px solid rgba(255,255,255,.1); border-radius: 15px; background: rgba(5,11,24,.28); }
+        .contact-item .note-icon { width: 44px; height: 44px; }
+        .contact-item small { display: block; color: var(--muted); font-size: .77rem; }
+        .contact-item strong { display: block; overflow-wrap: anywhere; font-size: .9rem; }
+        .contact-item a:hover strong { color: var(--primary); }
+
+        /* =========================
+           8. CHÂN TRANG
+           ========================= */
+        .site-footer { padding: 27px 0; border-top: 1px solid var(--border); }
+        .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; color: var(--muted); font-size: .84rem; }
+        .footer-inner p { margin: 0; }
+        .back-to-top { color: var(--primary); font-weight: 750; }
+
+        /* =========================
+           9. HIỆU ỨNG VÀ RESPONSIVE
+           ========================= */
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        :focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
+
+        @media (max-width: 900px) {
+            .hero-grid { gap: 35px; }
+            .portrait { min-height: 360px; }
+            .avatar-shape { width: 160px; height: 160px; font-size: 3.4rem; }
+            .about-grid { gap: 28px; }
+            .skills-grid, .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .contact-panel { padding: 32px; }
+        }
+        @media (max-width: 700px) {
+            .container { width: min(var(--max-width), calc(100% - 30px)); }
+            .section { padding: 74px 0; }
+            .navbar { min-height: 68px; }
+            .menu-toggle { display: grid; place-items: center; }
+            .nav-links { position: absolute; top: calc(100% + 1px); right: 15px; left: 15px; display: none; align-items: stretch; padding: 12px; border: 1px solid var(--border); border-radius: 16px; background: #10182b; box-shadow: var(--shadow); }
+            .nav-links.open { display: flex; flex-direction: column; }
+            .nav-links a { display: block; padding: 12px; }
+            .nav-links .nav-contact { margin: 3px 0 0; text-align: center; }
+            .hero { padding: 62px 0 70px; }
+            .hero-grid, .about-grid, .contact-panel { grid-template-columns: 1fr; }
+            .hero-grid { gap: 52px; }
+            .hero-visual { width: min(100%, 430px); justify-self: center; }
+            .hero h1 { font-size: clamp(2.6rem, 12vw, 4.4rem); }
+            .portrait { min-height: 340px; }
+            .floating-chip.top { left: -5px; }
+            .floating-chip.bottom { right: -5px; }
+            .section-heading { margin-bottom: 34px; }
+            .about-summary { padding: 24px; }
+            .contact-panel { gap: 22px; padding: 26px; }
+        }
+        @media (max-width: 480px) {
+            .brand { font-size: .96rem; }
+            .skills-grid, .projects-grid, .info-grid { grid-template-columns: 1fr; }
+            .skill-card p, .project-body p { min-height: 0; }
+            .button-row .button { width: 100%; }
+            .hero-socials { flex-wrap: wrap; }
+            .portrait { min-height: 310px; }
+            .avatar-shape { width: 145px; height: 145px; font-size: 3rem; }
+            .floating-chip { padding: 9px 11px; font-size: .77rem; }
+            .footer-inner { flex-direction: column; align-items: flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- THANH ĐIỀU HƯỚNG: đổi NgoVietAnh.dev thành tên hoặc thương hiệu của bạn -->
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Điều hướng chính">
+            <a class="brand" href="#trang-chu" aria-label="Về trang chủ">
+                <span class="brand-mark">A</span>
+                <span>NgoVietAnh<span>.dev</span></span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a class="active" href="#trang-chu">Trang chủ</a></li>
+                <li><a href="#gioi-thieu">Giới thiệu</a></li>
+                <li><a href="#ky-nang">Kỹ năng</a></li>
+                <li><a href="#du-an">Dự án</a></li>
+                <li><a class="nav-contact" href="#lien-he">Liên hệ ↗</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- TRANG CHỦ: thay tên, vị trí và phần mô tả bằng thông tin của bạn -->
+        <section class="hero" id="trang-chu">
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <div class="availability"><span class="status-dot"></span> Sẵn sàng học hỏi và phát triển</div>
+                    <h1><span class="greeting">Xin chào, tôi là</span><span class="gradient-text">Ngô Việt Anh</span></h1>
+                    <p class="hero-role">Sinh viên IT · Front-end Developer</p>
+                    <p class="hero-description">
+                        Tôi yêu thích công nghệ và lập trình web. Hiện tại, tôi đang xây dựng nền tảng
+                        HTML, CSS, JavaScript và từng bước biến những ý tưởng thành các sản phẩm web hữu ích.
+                    </p>
+                    <div class="button-row">
+                        <a class="button button-primary" href="#lien-he">Liên hệ với tôi <span aria-hidden="true">↗</span></a>
+                        <a class="button button-secondary" href="#du-an">Xem dự án <span aria-hidden="true">↓</span></a>
+                    </div>
+                    <div class="hero-socials">
+                        <a href="https://github.com/your-username" target="_blank" rel="noreferrer">GitHub ↗</a>
+                        <a href="https://www.linkedin.com/in/your-username/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+                        <a href="mailto:your.email@example.com">Email ↗</a>
+                    </div>
+                </div>
+
+                <!-- Khung đại diện không cần ảnh ngoài; có thể thay bằng ảnh cá nhân nếu muốn -->
+                <div class="hero-visual reveal" aria-label="Khung đại diện cá nhân">
+                    <div class="floating-chip top"><span class="chip-symbol">&lt;/&gt;</span> Learning by doing</div>
+                    <div class="portrait-frame">
+                        <div class="portrait">
+                            <!-- Đổi chữ NA thành chữ cái đầu trong tên của bạn -->
+                            <img
+                                class="avatar-shape"
+                                src="img/avatar.jpg"
+                                alt="Ảnh đại diện của tôi"
+                            >
+                            <div class="portrait-note">
+                                <div class="note-icon" aria-hidden="true">✦</div>
+                                <div><strong>Không ngừng học hỏi</strong><small>Mỗi ngày tiến bộ một chút</small></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-chip bottom"><span class="chip-symbol">✳</span> HTML · CSS · JavaScript</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GIỚI THIỆU -->
+        <section class="section about-section" id="gioi-thieu">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Tìm hiểu thêm</span>
+                    <h2>Giới thiệu <span class="gradient-text">bản thân</span></h2>
+                    <p class="section-description">Một vài điều về tôi, định hướng hiện tại và những mục tiêu tôi đang theo đuổi.</p>
+                </div>
+                <div class="about-grid">
+                    <article class="about-summary reveal">
+                        <div class="about-symbol" aria-hidden="true">⌘</div>
+                        <h3>Xin chào, rất vui được gặp bạn!</h3>
+                        <p>Tôi là người ham học hỏi, yêu thích việc tìm hiểu cách các trang web hoạt động và luôn cố gắng áp dụng kiến thức đã học vào những bài tập thực tế.</p>
+                    </article>
+                    <div class="about-content reveal">
+                        <p>Tôi đang tập trung xây dựng kiến thức nền tảng về phát triển giao diện web. Tôi tin rằng việc luyện tập đều đặn, đọc hiểu mã nguồn và chủ động tìm cách giải quyết vấn đề sẽ giúp mình tiến bộ mỗi ngày.</p>
+                        <p>Mục tiêu trước mắt của tôi là hoàn thiện kỹ năng HTML, CSS, JavaScript, làm được các dự án nhỏ và phát triển bản thân để sẵn sàng cho vị trí thực tập hoặc Junior Front-end Developer.</p>
+                        <div class="info-grid">
+                            <div class="info-item"><span class="info-label">Họ và tên</span><span class="info-value">Ngô Việt Anh</span></div>
+                            <div class="info-item"><span class="info-label">Vai trò</span><span class="info-value">Sinh viên IT</span></div>
+                            <div class="info-item"><span class="info-label">Định hướng</span><span class="info-value">Front-end Developer</span></div>
+                            <div class="info-item"><span class="info-label">Email</span><span class="info-value">your.email@example.com</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KỸ NĂNG: mức độ hiển thị chỉ là ví dụ, hãy chỉnh theo năng lực thực tế -->
+        <section class="section" id="ky-nang">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Những gì tôi đang học</span>
+                    <h2>Kỹ năng <span class="gradient-text">của tôi</span></h2>
+                    <p class="section-description">Các công nghệ và kỹ năng tôi đang tìm hiểu, luyện tập qua bài tập và dự án cá nhân.</p>
+                </div>
+                <div class="skills-grid">
+                    <article class="skill-card reveal">
+                        <div class="skill-icon">5</div>
+                        <h3>HTML5</h3>
+                        <p>Xây dựng cấu trúc trang web rõ ràng, sử dụng các thẻ semantic cơ bản.</p>
+                        <div class="skill-level"><span>Đang thực hành</span><span>Cơ bản</span></div>
+                        <div class="skill-track"><div class="skill-progress" style="--level: 72%"></div></div>
+                    </article>
+                    <article class="skill-card reveal">
+                        <div class="skill-icon">#</div>
+                        <h3>CSS3</h3>
+                        <p>Định dạng giao diện, sử dụng Flexbox, Grid và thiết kế responsive.</p>
+                        <div class="skill-level"><span>Đang thực hành</span><span>Cơ bản</span></div>
+                        <div class="skill-track"><div class="skill-progress" style="--level: 58%"></div></div>
+                    </article>
+                    <article class="skill-card reveal">
+                        <div class="skill-icon">JS</div>
+                        <h3>JavaScript</h3>
+                        <p>Tìm hiểu biến, kiểu dữ liệu, hàm, điều kiện, vòng lặp và DOM.</p>
+                        <div class="skill-level"><span>Đang học</span><span>Nền tảng</span></div>
+                        <div class="skill-track"><div class="skill-progress" style="--level: 38%"></div></div>
+                    </article>
+                    <article class="skill-card reveal">
+                        <div class="skill-icon">J</div>
+                        <h3>Java</h3>
+                        <p>Luyện tư duy lập trình, xử lý dữ liệu và thực hành các bài tập cơ bản.</p>
+                        <div class="skill-level"><span>Đang học</span><span>Nền tảng</span></div>
+                        <div class="skill-track"><div class="skill-progress" style="--level: 42%"></div></div>
+                    </article>
+                    <article class="skill-card reveal">
+                        <div class="skill-icon">⌘</div>
+                        <h3>Git & GitHub</h3>
+                        <p>Làm quen với quản lý phiên bản và lưu trữ mã nguồn dự án cá nhân.</p>
+                        <div class="skill-level"><span>Đang tìm hiểu</span><span>Cơ bản</span></div>
+                        <div class="skill-track"><div class="skill-progress" style="--level: 30%"></div></div>
+                    </article>
+                    <article class="skill-card reveal">
+                        <div class="skill-icon">✦</div>
+                        <h3>Kỹ năng mềm</h3>
+                        <p>Rèn luyện khả năng tự học, đọc tài liệu, làm việc nhóm và giải quyết vấn đề.</p>
+                        <div class="skill-level"><span>Rèn luyện mỗi ngày</span><span>Phát triển</span></div>
+                        <div class="skill-track"><div class="skill-progress" style="--level: 55%"></div></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- DỰ ÁN: thay các ví dụ bên dưới bằng dự án bạn đã thực hiện -->
+        <section class="section projects-section" id="du-an">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <span class="eyebrow">Thực hành thực tế</span>
+                    <h2>Dự án <span class="gradient-text">tiêu biểu</span></h2>
+                    <p class="section-description">Một số ý tưởng dự án phù hợp để luyện tập và thể hiện quá trình học tập của tôi.</p>
+                </div>
+                <div class="projects-grid">
+                    <article class="project-card reveal">
+                        <div class="project-cover"><span>01</span></div>
+                        <div class="project-body">
+                            <h3>Trang giới thiệu bản thân</h3>
+                            <p>Website cá nhân giới thiệu thông tin, kỹ năng và cách liên hệ với giao diện responsive.</p>
+                            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Responsive</span></div>
+                            <a class="project-link" href="#trang-chu">Xem trang hiện tại <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                    <article class="project-card reveal">
+                        <div class="project-cover" style="background:linear-gradient(135deg,#1b3440,#22264e)"><span>02</span></div>
+                        <div class="project-body">
+                            <h3>Quản lý sinh viên</h3>
+                            <p>Bài tập thực hành quản lý danh sách sinh viên, nhập thông tin và hiển thị dữ liệu.</p>
+                            <div class="tags"><span class="tag">Java</span><span class="tag">OOP</span><span class="tag">Console</span></div>
+                            <a class="project-link" href="#lien-he">Cần bổ sung liên kết <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                    <article class="project-card reveal">
+                        <div class="project-cover" style="background:linear-gradient(135deg,#32264c,#173b52)"><span>03</span></div>
+                        <div class="project-body">
+                            <h3>Website bán hàng mẫu</h3>
+                            <p>Giao diện thử nghiệm hiển thị sản phẩm, phân chia danh mục và bố trí thông tin dễ nhìn.</p>
+                            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+                            <a class="project-link" href="#lien-he">Cần bổ sung liên kết <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIÊN HỆ: hãy thay email và đường dẫn mạng xã hội bằng thông tin thật -->
+        <section class="section" id="lien-he">
+            <div class="container">
+                <div class="contact-panel reveal">
+                    <div class="contact-copy">
+                        <span class="eyebrow">Kết nối với tôi</span>
+                        <h2>Cùng nhau tạo nên điều <span class="gradient-text">tuyệt vời</span></h2>
+                        <p>Nếu bạn muốn trao đổi về công nghệ, chia sẻ cơ hội học tập hoặc góp ý cho các dự án của tôi, hãy liên hệ qua những kênh bên cạnh.</p>
+                        <a class="button button-primary" href="mailto:your.email@example.com">Gửi email cho tôi <span aria-hidden="true">↗</span></a>
+                    </div>
+                    <div class="contact-methods">
+                        <div class="contact-item">
+                            <div class="note-icon" aria-hidden="true">✉</div>
+                            <div><small>Email</small><a href="mailto:your.email@example.com"><strong>your.email@example.com</strong></a></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="note-icon" aria-hidden="true">⌘</div>
+                            <div><small>GitHub</small><a href="https://github.com/your-username" target="_blank" rel="noreferrer"><strong>github.com/your-username ↗</strong></a></div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="note-icon" aria-hidden="true">in</div>
+                            <div><small>LinkedIn</small><a href="https://www.linkedin.com/in/your-username/" target="_blank" rel="noreferrer"><strong>linkedin.com/in/your-username ↗</strong></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>© <span id="currentYear">2026</span> NgoVietAnh.dev · Được xây dựng bằng HTML, CSS và JavaScript.</p>
+            <a class="back-to-top" href="#trang-chu">Về đầu trang ↑</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mở/đóng menu trên màn hình nhỏ.
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', function () {
+            const isOpen = navLinks.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', isOpen);
+            menuToggle.setAttribute('aria-label', isOpen ? 'Đóng menu' : 'Mở menu');
+        });
+
+        // Đóng menu sau khi chọn một mục điều hướng.
+        document.querySelectorAll('.nav-links a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                navLinks.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Mở menu');
+            });
+        });
+
+        // Hiện các khối nội dung khi cuộn đến chúng.
+        const revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(function (element) {
+            revealObserver.observe(element);
+        });
+
+        // Tự cập nhật năm ở chân trang.
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
